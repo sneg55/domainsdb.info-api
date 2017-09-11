@@ -1,0 +1,114 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Registered domains search checks the lists of registered domains for names containing particular words/phrases/numbers or symbols. Technically it's just a GUI interface for domains-index.com database containing more than 260M of registered domains and 1000+ TLDS including newGTLDs. It's free to use and could be helpful domains/marketing research tool. Search results are limited to 50 results. You can have up to 100 results via API (link in footer) and full list by",
+    "version": "1.0.0",
+    "title": "domainsdb.info API"
+  },
+  "host": "api.domainsdb.info",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "search",
+      "description": "Search for registered domains"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Add a new pet to the store",
+        "description": "",
+        "operationId": "addPet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Search query for registered domains for ex. facebook",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tld",
+            "in": "query",
+            "description": "Search area (cctld|gtld|all)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/domains"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "domains": {
+      "description": "Domains data array",
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int32",
+          "example": "1235",
+          "description": "Total records found"
+        },
+        "time": {
+          "type": "integer",
+          "format": "int32",
+          "example": "5",
+          "description": "Request time"
+        },
+        "domains": {
+          "type": "array",
+          "description": "Search results array",
+          "items": {
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Domains name",
+                "example": "google.com, facebook--de.com"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
